@@ -1,9 +1,14 @@
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE GHCForeignImportPrim  #-}
+{-# LANGUAGE UnliftedFFITypes      #-}
+
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Primitive.SIMD
 -- Copyright   :  (c) 2015 Anselm Jonas Scholl
 -- License     :  BSD3
--- 
+--
 -- Maintainer  :  anselm.scholl@tu-harburg.de
 -- Stability   :  experimental
 -- Portability :  non-portable (uses GHC.Prim)
@@ -48,6 +53,7 @@ module Data.Primitive.SIMD (
     ,DoubleX4
     ,DoubleX8
     ,DoubleX16
+    ,Comparable(..)
     ) where
 
 -- This code was AUTOMATICALLY generated, DO NOT EDIT!
@@ -84,3 +90,18 @@ import Data.Primitive.SIMD.DoubleX2
 import Data.Primitive.SIMD.DoubleX4
 import Data.Primitive.SIMD.DoubleX8
 import Data.Primitive.SIMD.DoubleX16
+
+import GHC.Exts
+
+foreign import prim "fcomp_oge" fcomp_oge' :: FloatX4# -> FloatX4# -> Word32X4#
+foreign import prim "select"    select'    :: Word32X4# -> FloatX4# -> FloatX4# -> FloatX4#
+
+data CompareFunc = GE
+
+class SIMDVector v => Comparable v where
+  compareVector :: CompareFunc -> v -> v -> Word32X4
+  selectVector  :: Word32X4 -> v -> v -> v
+
+instance Comparable FloatX4 where
+  compareVector GE (FloatX4 x) (FloatX4 y) = Word32X4 (fcomp_oge' x y)
+  selectVector (Word32X4 s) (FloatX4 x) (FloatX4 y) = FloatX4 (select' s x y)

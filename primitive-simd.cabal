@@ -27,7 +27,7 @@ author:              Anselm Jonas Scholl
 maintainer:          anselm.scholl@tu-harburg.de
 copyright:           (c) 2015 Anselm Jonas Scholl
 category:            Data
-build-type:          Simple
+build-type:          Custom
 extra-source-files:  src-generate/Generator.hs,
                      generate.sh,
 

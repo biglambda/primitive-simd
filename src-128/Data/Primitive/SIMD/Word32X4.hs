@@ -6,7 +6,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE CPP                   #-}
 
-module Data.Primitive.SIMD.Word32X4 (Word32X4) where
+module Data.Primitive.SIMD.Word32X4 (Word32X4(..)) where
 
 -- This code was AUTOMATICALLY generated, DO NOT EDIT!
 
@@ -276,5 +276,3 @@ readWord32X4OffAddr (Addr a) (I# i) = primitive (\ s0 -> case (\ addr i' -> read
 -- | Write vector to the specified index of the address.
 writeWord32X4OffAddr :: PrimMonad m => Addr -> Int -> Word32X4 -> m ()
 writeWord32X4OffAddr (Addr a) (I# i) (Word32X4 m1) = primitive_ (writeWord32X4OffAddr# (plusAddr# a ((i *# 16#) +# 0#)) 0# m1)
-
-

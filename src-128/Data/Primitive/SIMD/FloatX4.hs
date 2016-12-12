@@ -6,7 +6,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE CPP                   #-}
 
-module Data.Primitive.SIMD.FloatX4 (FloatX4) where
+module Data.Primitive.SIMD.FloatX4 (FloatX4(..)) where
 
 -- This code was AUTOMATICALLY generated, DO NOT EDIT!
 
@@ -87,13 +87,13 @@ instance Floating FloatX4 where
     log          = mapVector log
     (**)         = zipVector (**)
     logBase      = zipVector (**)
-    sin          = mapVector sin 
+    sin          = mapVector sin
     tan          = mapVector tan
-    cos          = mapVector cos 
+    cos          = mapVector cos
     asin         = mapVector asin
-    atan         = mapVector atan 
+    atan         = mapVector atan
     acos         = mapVector acos
-    sinh         = mapVector sinh 
+    sinh         = mapVector sinh
     tanh         = mapVector tanh
     cosh         = mapVector cosh
     asinh        = mapVector asinh
@@ -290,5 +290,3 @@ readFloatX4OffAddr (Addr a) (I# i) = primitive (\ s0 -> case (\ addr i' -> readF
 -- | Write vector to the specified index of the address.
 writeFloatX4OffAddr :: PrimMonad m => Addr -> Int -> FloatX4 -> m ()
 writeFloatX4OffAddr (Addr a) (I# i) (FloatX4 m1) = primitive_ (writeFloatX4OffAddr# (plusAddr# a ((i *# 16#) +# 0#)) 0# m1)
-
-
