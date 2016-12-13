@@ -53,6 +53,7 @@ module Data.Primitive.SIMD (
     ,DoubleX4
     ,DoubleX8
     ,DoubleX16
+    ,CompareFunc(..)
     ,Comparable(..)
     ) where
 
@@ -93,8 +94,8 @@ import Data.Primitive.SIMD.DoubleX16
 
 import GHC.Exts
 
-foreign import prim "fcomp_oge" fcomp_oge' :: FloatX4# -> FloatX4# -> Word32X4#
-foreign import prim "select"    select'    :: Word32X4# -> FloatX4# -> FloatX4# -> FloatX4#
+foreign import prim "vfcomp_oge" fcomp_oge :: FloatX4# -> FloatX4# -> Word32X4#
+foreign import prim "vselect"    select    :: Word32X4# -> FloatX4# -> FloatX4# -> FloatX4#
 
 data CompareFunc = GE
 
@@ -103,5 +104,5 @@ class SIMDVector v => Comparable v where
   selectVector  :: Word32X4 -> v -> v -> v
 
 instance Comparable FloatX4 where
-  compareVector GE (FloatX4 x) (FloatX4 y) = Word32X4 (fcomp_oge' x y)
-  selectVector (Word32X4 s) (FloatX4 x) (FloatX4 y) = FloatX4 (select' s x y)
+  compareVector GE (FloatX4 x) (FloatX4 y) = Word32X4 (fcomp_oge x y)
+  selectVector (Word32X4 s) (FloatX4 x) (FloatX4 y) = FloatX4 (select s x y)

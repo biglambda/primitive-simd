@@ -1,7 +1,7 @@
-define cc10 void @fcomp_oge(i64* %baseReg,
-                            i64* %sp,
-                            i64* %hp,
-                            <4 x float> %r1, <4 x float> %r2)
+define cc10 void @vfcomp_oge(i64* %baseReg,
+                             i64* %sp,
+                             i64* %hp,
+                             <4 x float> %r1, <4 x float> %r2)
 {
   %1 = getelementptr inbounds i64, i64* %sp, i64 0
   %2 = load i64, i64* %1, align 8
@@ -18,10 +18,10 @@ define cc10 void @fcomp_oge(i64* %baseReg,
   ret void
 }
 
-define cc10 void @select(i64* %baseReg,
-                         i64* %sp,
-                         i64* %hp,
-                         <4 x i32> %r1, <4 x float> %r2, <4 x float> %r3)
+define cc10 void @vselect(i64* %baseReg,
+                          i64* %sp,
+                          i64* %hp,
+                          <4 x i32> %r1, <4 x float> %r2, <4 x float> %r3)
 {
   %1 = getelementptr inbounds i64, i64* %sp, i64 0
   %2 = load i64, i64* %1, align 8
