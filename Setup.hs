@@ -10,6 +10,7 @@ import Distribution.Verbosity
 import Distribution.PackageDescription
 import System.FilePath ( (</>) )
 import System.Directory( canonicalizePath )
+import Control.Monad (when)
 
 main = defaultMainWithHooks simpleUserHooks { buildHook  = myBuildHook }
 
@@ -32,11 +33,16 @@ myBuildHook pkgdesc binfo uh bf = do
   -- however the library is static and doesn't include the vecmod
   -- we will then explicitly to insert it.
   let unitId  = componentUnitId (getComponentLocalBuildInfo binfo CLibName)
-      libPath = buildroot </> mkLibName unitId
+      vlibPath = buildroot </> mkLibName     unitId
+      plibPath = buildroot </> mkProfLibName unitId
+      whenVanillaLib = when (withVanillaLib binfo)
+      whenProfLib    = when (withProfLib binfo)      
       Platform hostArch hostOS = hostPlatform binfo
       args    = case hostOS of
                    OSX -> ["-q", "-s"]
                    _   -> ["-q"]
   (ar, _) <- requireProgram verb arProgram (withPrograms binfo)
-  runProgramInvocation verb $ programInvocation
-     ar (args ++ [libPath, sobj])
+  whenVanillaLib $
+    runProgramInvocation verb $ programInvocation ar (args ++ [vlibPath, sobj])
+  whenProfLib $
+    runProgramInvocation verb $ programInvocation ar (args ++ [plibPath, sobj])
