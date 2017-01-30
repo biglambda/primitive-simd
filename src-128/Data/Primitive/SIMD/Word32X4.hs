@@ -6,7 +6,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE CPP                   #-}
 
-module Data.Primitive.SIMD.Word32X4 (Word32X4(..)) where
+module Data.Primitive.SIMD.Word32X4 (Word32X4) where
 
 -- This code was AUTOMATICALLY generated, DO NOT EDIT!
 

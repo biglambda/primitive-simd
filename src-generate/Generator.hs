@@ -28,15 +28,15 @@ type TypeRange = (String, Maybe Int, Int, Int)
 
 -- | Description of all primitive types, compressed form
 primitiveTypes :: [TypeRange]
-primitiveTypes = [("Int",    Just  8, 16, 64)
-                 ,("Int",    Just 16,  8, 32)
-                 ,("Int",    Just 32,  4, 16)
+primitiveTypes = [("Int",    Just  8,  2, 64)
+                 ,("Int",    Just 16,  2, 32)
+                 ,("Int",    Just 32,  2, 16)
                  ,("Int",    Just 64,  2,  8)
-                 ,("Word",   Just  8, 16, 64)
-                 ,("Word",   Just 16,  8, 32)
-                 ,("Word",   Just 32,  4, 16)
+                 ,("Word",   Just  8,  2, 64)
+                 ,("Word",   Just 16,  2, 32)
+                 ,("Word",   Just 32,  2, 16)
                  ,("Word",   Just 64,  2,  8)
-                 ,("Float",  Nothing,  4, 16)
+                 ,("Float",  Nothing,  2, 16)
                  ,("Double", Nothing,  2, 16)
                  ]
 

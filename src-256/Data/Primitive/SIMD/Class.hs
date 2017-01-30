@@ -59,7 +59,7 @@ class (Num v, Real (Elem v)) => SIMDVector v where
     -- | Unpack a vector.
     unpackVector     :: v -> ElemTuple v
 
--- | Provides vectorized versions of 'quot' and 'rem'. Implementing their 
+-- | Provides vectorized versions of 'quot' and 'rem'. Implementing their
 --   type class is not possible for SIMD types as it would require
 --   implementing 'toInteger'.
 class SIMDVector v => SIMDIntVector v where
@@ -82,18 +82,30 @@ setOffAddrGeneric addr off n v | n <= 0 = return ()
     writeOffAddr addr off v
     setOffAddrGeneric addr (off + 1) (n - 1) v
 
+{-# RULES "unpack/pack Int8X2#" forall x . unpackInt8X2# (packInt8X2# x) = x #-}
+{-# RULES "pack/unpack Int8X2#" forall x . packInt8X2# (unpackInt8X2# x) = x #-}
+{-# RULES "unpack/pack Int8X4#" forall x . unpackInt8X4# (packInt8X4# x) = x #-}
+{-# RULES "pack/unpack Int8X4#" forall x . packInt8X4# (unpackInt8X4# x) = x #-}
+{-# RULES "unpack/pack Int8X8#" forall x . unpackInt8X8# (packInt8X8# x) = x #-}
+{-# RULES "pack/unpack Int8X8#" forall x . packInt8X8# (unpackInt8X8# x) = x #-}
 {-# RULES "unpack/pack Int8X16#" forall x . unpackInt8X16# (packInt8X16# x) = x #-}
 {-# RULES "pack/unpack Int8X16#" forall x . packInt8X16# (unpackInt8X16# x) = x #-}
 {-# RULES "unpack/pack Int8X32#" forall x . unpackInt8X32# (packInt8X32# x) = x #-}
 {-# RULES "pack/unpack Int8X32#" forall x . packInt8X32# (unpackInt8X32# x) = x #-}
 {-# RULES "unpack/pack Int8X64#" forall x . unpackInt8X64# (packInt8X64# x) = x #-}
 {-# RULES "pack/unpack Int8X64#" forall x . packInt8X64# (unpackInt8X64# x) = x #-}
+{-# RULES "unpack/pack Int16X2#" forall x . unpackInt16X2# (packInt16X2# x) = x #-}
+{-# RULES "pack/unpack Int16X2#" forall x . packInt16X2# (unpackInt16X2# x) = x #-}
+{-# RULES "unpack/pack Int16X4#" forall x . unpackInt16X4# (packInt16X4# x) = x #-}
+{-# RULES "pack/unpack Int16X4#" forall x . packInt16X4# (unpackInt16X4# x) = x #-}
 {-# RULES "unpack/pack Int16X8#" forall x . unpackInt16X8# (packInt16X8# x) = x #-}
 {-# RULES "pack/unpack Int16X8#" forall x . packInt16X8# (unpackInt16X8# x) = x #-}
 {-# RULES "unpack/pack Int16X16#" forall x . unpackInt16X16# (packInt16X16# x) = x #-}
 {-# RULES "pack/unpack Int16X16#" forall x . packInt16X16# (unpackInt16X16# x) = x #-}
 {-# RULES "unpack/pack Int16X32#" forall x . unpackInt16X32# (packInt16X32# x) = x #-}
 {-# RULES "pack/unpack Int16X32#" forall x . packInt16X32# (unpackInt16X32# x) = x #-}
+{-# RULES "unpack/pack Int32X2#" forall x . unpackInt32X2# (packInt32X2# x) = x #-}
+{-# RULES "pack/unpack Int32X2#" forall x . packInt32X2# (unpackInt32X2# x) = x #-}
 {-# RULES "unpack/pack Int32X4#" forall x . unpackInt32X4# (packInt32X4# x) = x #-}
 {-# RULES "pack/unpack Int32X4#" forall x . packInt32X4# (unpackInt32X4# x) = x #-}
 {-# RULES "unpack/pack Int32X8#" forall x . unpackInt32X8# (packInt32X8# x) = x #-}
@@ -106,18 +118,30 @@ setOffAddrGeneric addr off n v | n <= 0 = return ()
 {-# RULES "pack/unpack Int64X4#" forall x . packInt64X4# (unpackInt64X4# x) = x #-}
 {-# RULES "unpack/pack Int64X8#" forall x . unpackInt64X8# (packInt64X8# x) = x #-}
 {-# RULES "pack/unpack Int64X8#" forall x . packInt64X8# (unpackInt64X8# x) = x #-}
+{-# RULES "unpack/pack Word8X2#" forall x . unpackWord8X2# (packWord8X2# x) = x #-}
+{-# RULES "pack/unpack Word8X2#" forall x . packWord8X2# (unpackWord8X2# x) = x #-}
+{-# RULES "unpack/pack Word8X4#" forall x . unpackWord8X4# (packWord8X4# x) = x #-}
+{-# RULES "pack/unpack Word8X4#" forall x . packWord8X4# (unpackWord8X4# x) = x #-}
+{-# RULES "unpack/pack Word8X8#" forall x . unpackWord8X8# (packWord8X8# x) = x #-}
+{-# RULES "pack/unpack Word8X8#" forall x . packWord8X8# (unpackWord8X8# x) = x #-}
 {-# RULES "unpack/pack Word8X16#" forall x . unpackWord8X16# (packWord8X16# x) = x #-}
 {-# RULES "pack/unpack Word8X16#" forall x . packWord8X16# (unpackWord8X16# x) = x #-}
 {-# RULES "unpack/pack Word8X32#" forall x . unpackWord8X32# (packWord8X32# x) = x #-}
 {-# RULES "pack/unpack Word8X32#" forall x . packWord8X32# (unpackWord8X32# x) = x #-}
 {-# RULES "unpack/pack Word8X64#" forall x . unpackWord8X64# (packWord8X64# x) = x #-}
 {-# RULES "pack/unpack Word8X64#" forall x . packWord8X64# (unpackWord8X64# x) = x #-}
+{-# RULES "unpack/pack Word16X2#" forall x . unpackWord16X2# (packWord16X2# x) = x #-}
+{-# RULES "pack/unpack Word16X2#" forall x . packWord16X2# (unpackWord16X2# x) = x #-}
+{-# RULES "unpack/pack Word16X4#" forall x . unpackWord16X4# (packWord16X4# x) = x #-}
+{-# RULES "pack/unpack Word16X4#" forall x . packWord16X4# (unpackWord16X4# x) = x #-}
 {-# RULES "unpack/pack Word16X8#" forall x . unpackWord16X8# (packWord16X8# x) = x #-}
 {-# RULES "pack/unpack Word16X8#" forall x . packWord16X8# (unpackWord16X8# x) = x #-}
 {-# RULES "unpack/pack Word16X16#" forall x . unpackWord16X16# (packWord16X16# x) = x #-}
 {-# RULES "pack/unpack Word16X16#" forall x . packWord16X16# (unpackWord16X16# x) = x #-}
 {-# RULES "unpack/pack Word16X32#" forall x . unpackWord16X32# (packWord16X32# x) = x #-}
 {-# RULES "pack/unpack Word16X32#" forall x . packWord16X32# (unpackWord16X32# x) = x #-}
+{-# RULES "unpack/pack Word32X2#" forall x . unpackWord32X2# (packWord32X2# x) = x #-}
+{-# RULES "pack/unpack Word32X2#" forall x . packWord32X2# (unpackWord32X2# x) = x #-}
 {-# RULES "unpack/pack Word32X4#" forall x . unpackWord32X4# (packWord32X4# x) = x #-}
 {-# RULES "pack/unpack Word32X4#" forall x . packWord32X4# (unpackWord32X4# x) = x #-}
 {-# RULES "unpack/pack Word32X8#" forall x . unpackWord32X8# (packWord32X8# x) = x #-}
@@ -130,6 +154,8 @@ setOffAddrGeneric addr off n v | n <= 0 = return ()
 {-# RULES "pack/unpack Word64X4#" forall x . packWord64X4# (unpackWord64X4# x) = x #-}
 {-# RULES "unpack/pack Word64X8#" forall x . unpackWord64X8# (packWord64X8# x) = x #-}
 {-# RULES "pack/unpack Word64X8#" forall x . packWord64X8# (unpackWord64X8# x) = x #-}
+{-# RULES "unpack/pack FloatX2#" forall x . unpackFloatX2# (packFloatX2# x) = x #-}
+{-# RULES "pack/unpack FloatX2#" forall x . packFloatX2# (unpackFloatX2# x) = x #-}
 {-# RULES "unpack/pack FloatX4#" forall x . unpackFloatX4# (packFloatX4# x) = x #-}
 {-# RULES "pack/unpack FloatX4#" forall x . packFloatX4# (unpackFloatX4# x) = x #-}
 {-# RULES "unpack/pack FloatX8#" forall x . unpackFloatX8# (packFloatX8# x) = x #-}
@@ -142,4 +168,3 @@ setOffAddrGeneric addr off n v | n <= 0 = return ()
 {-# RULES "pack/unpack DoubleX4#" forall x . packDoubleX4# (unpackDoubleX4# x) = x #-}
 {-# RULES "unpack/pack DoubleX8#" forall x . unpackDoubleX8# (packDoubleX8# x) = x #-}
 {-# RULES "pack/unpack DoubleX8#" forall x . packDoubleX8# (unpackDoubleX8# x) = x #-}
-

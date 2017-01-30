@@ -1,14 +1,9 @@
-{-# LANGUAGE UnboxedTuples         #-}
-{-# LANGUAGE MagicHash             #-}
-{-# LANGUAGE GHCForeignImportPrim  #-}
-{-# LANGUAGE UnliftedFFITypes      #-}
-
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Primitive.SIMD
 -- Copyright   :  (c) 2015 Anselm Jonas Scholl
 -- License     :  BSD3
---
+-- 
 -- Maintainer  :  anselm.scholl@tu-harburg.de
 -- Stability   :  experimental
 -- Portability :  non-portable (uses GHC.Prim)
@@ -22,30 +17,43 @@ module Data.Primitive.SIMD (
     ,SIMDIntVector(..)
      -- * SIMD data types
     ,Tuple64(..)
+    ,Int8X2
+    ,Int8X4
+    ,Int8X8
     ,Int8X16
     ,Int8X32
     ,Int8X64
+    ,Int16X2
+    ,Int16X4
     ,Int16X8
     ,Int16X16
     ,Int16X32
+    ,Int32X2
     ,Int32X4
     ,Int32X8
     ,Int32X16
     ,Int64X2
     ,Int64X4
     ,Int64X8
+    ,Word8X2
+    ,Word8X4
+    ,Word8X8
     ,Word8X16
     ,Word8X32
     ,Word8X64
+    ,Word16X2
+    ,Word16X4
     ,Word16X8
     ,Word16X16
     ,Word16X32
+    ,Word32X2
     ,Word32X4
     ,Word32X8
     ,Word32X16
     ,Word64X2
     ,Word64X4
     ,Word64X8
+    ,FloatX2
     ,FloatX4
     ,FloatX8
     ,FloatX16
@@ -53,37 +61,48 @@ module Data.Primitive.SIMD (
     ,DoubleX4
     ,DoubleX8
     ,DoubleX16
-    ,CompareFunc(..)
-    ,Comparable(..)
     ) where
 
 -- This code was AUTOMATICALLY generated, DO NOT EDIT!
 
 import Data.Primitive.SIMD.Class
+import Data.Primitive.SIMD.Int8X2
+import Data.Primitive.SIMD.Int8X4
+import Data.Primitive.SIMD.Int8X8
 import Data.Primitive.SIMD.Int8X16
 import Data.Primitive.SIMD.Int8X32
 import Data.Primitive.SIMD.Int8X64
+import Data.Primitive.SIMD.Int16X2
+import Data.Primitive.SIMD.Int16X4
 import Data.Primitive.SIMD.Int16X8
 import Data.Primitive.SIMD.Int16X16
 import Data.Primitive.SIMD.Int16X32
+import Data.Primitive.SIMD.Int32X2
 import Data.Primitive.SIMD.Int32X4
 import Data.Primitive.SIMD.Int32X8
 import Data.Primitive.SIMD.Int32X16
 import Data.Primitive.SIMD.Int64X2
 import Data.Primitive.SIMD.Int64X4
 import Data.Primitive.SIMD.Int64X8
+import Data.Primitive.SIMD.Word8X2
+import Data.Primitive.SIMD.Word8X4
+import Data.Primitive.SIMD.Word8X8
 import Data.Primitive.SIMD.Word8X16
 import Data.Primitive.SIMD.Word8X32
 import Data.Primitive.SIMD.Word8X64
+import Data.Primitive.SIMD.Word16X2
+import Data.Primitive.SIMD.Word16X4
 import Data.Primitive.SIMD.Word16X8
 import Data.Primitive.SIMD.Word16X16
 import Data.Primitive.SIMD.Word16X32
+import Data.Primitive.SIMD.Word32X2
 import Data.Primitive.SIMD.Word32X4
 import Data.Primitive.SIMD.Word32X8
 import Data.Primitive.SIMD.Word32X16
 import Data.Primitive.SIMD.Word64X2
 import Data.Primitive.SIMD.Word64X4
 import Data.Primitive.SIMD.Word64X8
+import Data.Primitive.SIMD.FloatX2
 import Data.Primitive.SIMD.FloatX4
 import Data.Primitive.SIMD.FloatX8
 import Data.Primitive.SIMD.FloatX16
@@ -91,18 +110,3 @@ import Data.Primitive.SIMD.DoubleX2
 import Data.Primitive.SIMD.DoubleX4
 import Data.Primitive.SIMD.DoubleX8
 import Data.Primitive.SIMD.DoubleX16
-
-import GHC.Exts
-
-foreign import prim "vfcomp_oge" fcomp_oge :: FloatX4# -> FloatX4# -> Word32X4#
-foreign import prim "vselect"    select    :: Word32X4# -> FloatX4# -> FloatX4# -> FloatX4#
-
-data CompareFunc = GE
-
-class SIMDVector v => Comparable v where
-  compareVector :: CompareFunc -> v -> v -> Word32X4
-  selectVector  :: Word32X4 -> v -> v -> v
-
-instance Comparable FloatX4 where
-  compareVector GE (FloatX4 x) (FloatX4 y) = Word32X4 (fcomp_oge x y)
-  selectVector (Word32X4 s) (FloatX4 x) (FloatX4 y) = FloatX4 (select s x y)

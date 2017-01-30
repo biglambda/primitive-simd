@@ -6,7 +6,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE CPP                   #-}
 
-module Data.Primitive.SIMD.FloatX4 (FloatX4(..)) where
+module Data.Primitive.SIMD.FloatX4 (FloatX4) where
 
 -- This code was AUTOMATICALLY generated, DO NOT EDIT!
 
